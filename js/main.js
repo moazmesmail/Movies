@@ -1,5 +1,6 @@
 url="https://api.themoviedb.org/3/movie/top_rated?language=en-US&api_key=9619aa418b38ce1b6500fe0b36a544da";
-url="https://api.themoviedb.org/3/discover/movie?api_key=9619aa418b38ce1b6500fe0b36a544da";
+// url="https://api.themoviedb.org/3/discover/movie?api_key=9619aa418b38ce1b6500fe0b36a544da";
+// url="https://api.themoviedb.org/3/discover/tv?api_key=9619aa418b38ce1b6500fe0b36a544da";
 img_url=`https://image.tmdb.org/t/p/w300/backdrop_path`;
 
 function display (data) {
@@ -16,7 +17,7 @@ function display (data) {
           <img src="${i}" alt="${m.title}">
           </div>
           <div class="title">
-            <h2>${m.title==undefined?m.name:m.title}</h2>
+            <h2>${m.title}</h2>
             <h2>${m.vote}</h2>
           </div>
           <p>${m.overview}</p>
@@ -24,7 +25,7 @@ function display (data) {
     }
   )
   // console.log(cartona)
-  console.log(cards.innerHTML=cartona)
+  cards.innerHTML=cartona
 };
 
 fetch(url)
@@ -34,16 +35,14 @@ fetch(url)
 }
 ).then((data)=>{
   data=data.results;
-  // console.log(data)
+  console.log(data)
   parsedData=data.map(
     (m)=>{
       return {
-        title:m.title
-      ,name:m?.name,
-      img : m?.backdrop_path
-      ,
-      vote:m?.vote_average,
-      overview:m?.overview
+        title:m.title == undefined ? m.name :m.title,
+        img : m?.backdrop_path == undefined ? m?.poster_path:m?.backdrop_path,
+        vote:m?.vote_average,
+        overview:m?.overview
       }
     }
   );
